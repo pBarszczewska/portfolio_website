@@ -1,0 +1,58 @@
+## Build directories
+bin/
+obj/
+out/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+[Ww][Ii][Nn]32/
+
+# Visual Studio Code workspace settings
+.vscode/
+
+# Visual Studio directories
+.vs/
+
+# User secrets (stored outside repo, but ignore local folder anyway)
+secrets.json
+
+# App specific
+appsettings.Development.json
+appsettings.Local.json
+
+# SQL and database
+*.mdf
+*.ldf
+*.ndf
+
+# Logs
+*.log
+logs/
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+
+# Cache / temp
+*.cache
+*.tmp
+*.temp
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# JetBrains Rider
+.idea/
+
+# Others
+*.user
+*.suo
+*.userosscache
+*.sln.docstates

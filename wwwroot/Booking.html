@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Booking System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;  
+      flex-direction: column;
+      color: #2e3d3a;
+      background-color: #fafafa;
+      scroll-behavior: smooth;
+    }
+    header {
+      /* minimal transparent background */
+      background-color: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    /* pattern background */
+    .pattern-bg {
+      background-image: url('https://cdn.pixabay.com/photo/2021/12/29/12/08/line-art-6901479_1280.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    
+
+    /* Container for booking step */
+  #booking-step {
+    display: none;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 16px;
+    max-width: 400px;
+    background-color: #f9f9f9;
+  }
+
+  /* Selected item name bold */
+  #selected-item-name {
+    font-weight: bold;
+  }
+
+  /* Each label/input on its own line */
+  #booking-step label {
+    display: block;
+    margin: 10px 0;
+  }
+
+  #booking-step input[type="datetime-local"],
+  #booking-step input[type="number"] {
+    display: block;
+    width: 100%;
+    padding: 6px 8px;
+    margin-top: 4px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  /* Buttons container */
+  .booking-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #eef2f7;
+  }
+
+  /* Style individual buttons */
+  .booking-buttons button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+
+  .booking-buttons button#book-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .booking-buttons button#book-btn:hover {
+    background-color: #45a049;
+  }
+
+  .booking-buttons button.back-btn {
+    background-color: #f44336;
+    color: white;
+  }
+
+  .booking-buttons button.back-btn:hover {
+    background-color: #da190b;
+  }
+  </style>
+
+</head>
+
+<body class="pattern-bg text-gray-900 min-h-screen flex flex-col items-center justify-center">
+
+      <!-- Navigation -->
+  <header class="fixed top-0 left-0 w-full z-50">
+    <nav class="max-w-5xl mx-auto flex justify-between items-center py-4 px-6">
+      <h1 class="text-xl font-semibold text-gray-800">Paulina Barszczewska</h1>
+      <ul class="flex space-x-6 text-gray-600 font-medium">
+        <li><a href="Home.html#home" class="hover:text-gray-800">Home</a></li>
+        <li><a href="Home.html#about" class="hover:text-gray-800">About</a></li>
+        <li><a href="Home.html#work" class="hover:text-gray-800">Work</a></li>
+        <li><a href="Home.html#contact" class="hover:text-gray-800">Contact</a></li>
+        <li class="relative">
+          <button id="langButton" class="hover:text-gray-800 focus:outline-none">Language ▼</button>
+          <!-- Dropdown -->
+          <div id="langDropdown" class="absolute hidden right-0 mt-2 w-32 bg-white/90 backdrop-blur-md rounded-lg shadow-lg text-center">
+            <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('en')">🇬🇧 English</button>
+            <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('es')">🇪🇸 Español</button>
+            <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('pl')">🇵🇱 Polski</button>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+
+  <!-- Booking section -->
+  <div id="app" class="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg space-y-6">
+    <h1 id="loginSectionHeader" class="hidden text-3xl font-bold text-center text-gray-800">Please log in to make a reservation</h1>
+
+    <div id="loginSection" class="space-y-3">
+      <h2 class="text-xl font-semibold">Login</h2>
+      <input id="login-username" class="border border-gray-300 rounded p-2 w-full" placeholder="Username">
+      <input id="login-password" type="password" class="border border-gray-300 rounded p-2 w-full" placeholder="Password">
+      <button onclick="login()" class="bg-gray-500 hover:bg-gray-600 text-white w-full py-2 rounded">Login</button>
+
+      <p class="text-center text-sm text-gray-500">No account? 
+        <a href="#" onclick="showRegister()" class="text-gray-700 hover:underline">Register</a>
+      </p>
+    </div>
+
+    <div id="register-section" class="space-y-3 hidden">
+      <h2 class="text-xl font-semibold">Register</h2>
+      <input id="reg-username" class="border border-gray-300 rounded p-2 w-full" placeholder="Username">
+      <input id="reg-password" type="password" class="border border-gray-300 rounded p-2 w-full" placeholder="Password">
+      <input id="reg-email" type="email" class="border border-gray-300 rounded p-2 w-full" placeholder="Example@email.com">
+      <button onclick="register()" class="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded">Register</button>
+
+      <p class="text-center text-sm text-gray-500">Already registered? 
+        <a href="#" onclick="showLogin()" class="text-gray-700 hover:underline">Login</a>
+      </p>
+    </div>
+
+    <div id="booking-section" class="hidden">
+      <div id="items-step">
+        <h3>Select Item</h3>
+        <div id="items-list"></div>
+      </div>
+
+      <div id="booking-step">
+        <h3>Book <span id="selected-item-name"></span></h3>
+        
+        <label>
+          Start:
+          <input type="datetime-local" id="startDate" />
+        </label>
+        
+        <label>
+          Duration (hours, optional):
+          <input type="number" id="duration" min="1" />
+        </label>
+        
+        <label>
+          Whole Day:
+          <input type="checkbox" id="wholeDay" />
+        </label>
+        <div class="booking-buttons">
+          <button id="book-btn">Book</button>
+          <button class=" back-btn" onclick="showItemsStep()">Back</button>
+        </div>
+      </div>
+
+      <div id="my-bookings-section" class="mt-6">
+        <h3 class="text-lg font-semibold mb-2">My Bookings</h3>
+        <div id="my-bookings" class="space-y-2"></div>
+      </div>
+
+    </div>
+
+    <div id="admin-section" class="hidden">
+      <h2 class="text-2xl font-semibold text-red-600">Admin Panel</h2>
+      <div class="space-y-3">
+        <button onclick="loadAllBookings()" class="bg-gray-700 text-white px-4 py-2 rounded">View All Bookings</button>
+        <button onclick="loadAllItems()" class="bg-gray-700 text-white px-4 py-2 rounded">Manage Items</button>
+      </div>
+      <div id="admin-content" class="mt-4"></div>
+    </div>
+
+    <button id="logout-btn" onclick="logout()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 w-full py-2 rounded hidden">Logout</button>
+  </div>
+</div>
+
+  <footer id="rights" class="text-center mt-20 mb-10 text-sm text-gray-500">
+    © <span id="year"></span> Paulina Barszczewska. All rights reserved.
+  </footer>
+
+
+
+<script>
+  //API BASE will have to be changed before publishing !!!!!!!!!!!!!!!!!!
+  const API_BASE = "http://localhost:5011/api";
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  document.addEventListener("DOMContentLoaded", () => {
+      if (currentUser) {
+          console.log("Logged in as:", currentUser.username);
+          showBooking();
+      } else {
+          console.log("No user found in localStorage.");
+          showLogin();
+      }
+  });
+
+if (currentUser) {
+  document.getElementById('logout-btn')?.classList.remove('hidden');
+  if (currentUser.isAdmin) {
+    document.getElementById('admin-section')?.classList.remove('hidden');
+  }
+}
+
+
+function showRegister() 
+{
+  document.getElementById('loginSection').classList.add('hidden');
+  document.getElementById('register-section').classList.remove('hidden');
+}
+
+function showLogin() 
+{
+  document.getElementById('register-section').classList.add('hidden');
+  document.getElementById('loginSection').classList.remove('hidden');
+}
+
+function showBooking() 
+{
+  document.getElementById('loginSection').classList.add('hidden');
+  document.getElementById('register-section').classList.add('hidden');
+
+  const bookingSection = document.getElementById('booking-section');
+  bookingSection.classList.remove('hidden'); // make visible
+
+  loadItems();
+  loadBookings();
+}
+
+async function register() 
+{
+  const username = document.getElementById('reg-username').value.trim();
+  const password = document.getElementById('reg-password').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  if (!username || !password) return alert('Enter username and password.');
+
+  const res = await fetch(`${API_BASE}/User/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, username, password })
+  });
+  if (res.ok) {
+    alert('Registered! You can now log in.');
+    showLogin();
+  } else {
+    alert('Registration failed.');
+  }
+}
+
+async function login() 
+{
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value.trim();
+
+  const res = await fetch(`${API_BASE}/User/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+
+  if (res.ok) 
+  {
+    currentUser = await res.json();
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    showBooking();
+    document.getElementById('logout-btn').classList.remove('hidden'); // show logout
+    if (currentUser.isAdmin) 
+    {
+      document.getElementById('admin-section').classList.remove('hidden');
+    }
+  } else {
+    alert('Login failed.');
+  }
+}
+
+let selectedItem = null;
+
+async function loadItems() 
+{
+  const res = await fetch(`${API_BASE}/Item/available`);
+  const items = await res.json();
+  const container = document.getElementById('items-list');
+  container.innerHTML = '';
+
+  items.forEach(i => {
+    const div = document.createElement('div');
+    div.className = 'flex justify-between items-center p-3 border rounded';
+    const span = document.createElement('span');
+    span.textContent = `${i.name} (${i.isAvailable ? 'Available' : 'Booked'})`;
+
+    const btn = document.createElement('button');
+    btn.textContent = 'Select';
+    btn.className = 'bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600';
+    btn.disabled = !i.isAvailable;
+
+    // attach click handler properly
+    btn.addEventListener('click', () => selectItem(i.name));
+
+    div.appendChild(span);
+    div.appendChild(btn);
+    container.appendChild(div);
+  });
+}
+
+function selectItem(itemname) 
+{
+  console.log('Selected item:', itemname);
+  selectedItem = itemname;
+  document.getElementById('selected-item-name').textContent = itemname;
+
+  // Show booking step
+  document.getElementById('items-step').style.display = 'none';
+  document.getElementById('booking-step').style.display = 'block';
+}
+window.selectItem = selectItem; // globally accessible
+
+function showItemsStep() 
+{
+  document.getElementById('items-step').style.display = 'block';
+  document.getElementById('booking-step').style.display = 'none';
+}
+
+document.getElementById('book-btn').addEventListener('click', async () => {
+  if (!currentUser) return alert('Please log in.');
+  if (!selectedItem) return alert('No item selected.');
+
+  const startDate = document.getElementById('startDate').value;
+  const duration = document.getElementById('duration').value;
+  const wholeDay = document.getElementById('wholeDay').checked;
+
+  if (!startDate) return alert('Please select a start time.');
+
+  const url = new URL(`${API_BASE}/Booking`);
+  url.searchParams.append('username', currentUser.username);
+  url.searchParams.append('email', currentUser.email);
+  url.searchParams.append('itemname', selectedItem);
+  url.searchParams.append('startDate', startDate);
+  if (duration) url.searchParams.append('durationHours', duration);
+  if (wholeDay) url.searchParams.append('wholeDay', wholeDay);
+
+  const res = await fetch(url, { method: 'POST' });
+
+  if (res.ok) {
+    alert('Booking successful!');
+    loadItems();
+    loadBookings();
+    showItemsStep(); // go back to items list
+  } else {
+    const error = await res.text();
+    alert(`Booking failed: ${error}`);
+  }
+});
+
+// Load items on page load
+loadItems();
+
+
+async function loadBookings() 
+{
+  if (!currentUser) return;
+
+  const res = await fetch(`${API_BASE}/Booking/user/${currentUser.username}`);
+  if (!res.ok) {
+    document.getElementById('my-bookings').innerHTML = '<p class="text-gray-400">No bookings found.</p>';
+    return;
+  }
+
+  const bookings = await res.json();
+  const container = document.getElementById('my-bookings');
+  container.innerHTML = '';
+
+  if (!bookings.length) {
+    container.innerHTML = '<p class="text-gray-400">No active bookings.</p>';
+    return;
+  }
+
+  bookings.forEach(b => {
+    const div = document.createElement('div');
+    div.id = `booking-${b.id}`;
+    div.className = 'flex justify-between items-center p-3 border rounded';
+    div.innerHTML = `
+      <span><strong>${b.itemName}</strong> — ${new Date(b.startDate).toLocaleString()}</span>
+      <button onclick="cancelBooking(${b.id})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Cancel</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+
+async function book(itemname) 
+{
+  if (!currentUser) {
+    alert('Please log in first.');
+    return;
+  }
+
+  if (!currentUser.email) {
+    alert('Please ensure your email is saved in your account.');
+    return;
+  }
+
+  const startInput = document.getElementById(`startDate-${itemname}`) || document.getElementById('startDate');
+  const endInput = document.getElementById(`endDate-${itemname}`) || document.getElementById('endDate');
+
+  const startLocal = startInput?.value;
+  const endLocal   = endInput?.value;
+
+  if (!startLocal) {
+  alert('Please select a start date.');
+  return;
+  }
+
+  // Convert to full ISO UTC string
+  //const startDate = new Date(startLocal).toISOString();
+  //const endDate = new Date(endLocal).toISOString();
+
+  // Helper: convert YYYY-MM-DD → local datetime string (no timezone)
+  function toLocalDateISOString(localDate) {
+    const [year, month, day] = localDate.split('-');
+    return `${year}-${month}-${day}T00:00:00`; // Keep local time, no UTC shift
+  }
+
+  const startDate = toLocalDateISOString(startLocal);
+  const endDate = toLocalDateISOString(endLocal);
+
+  const params = new URLSearchParams()
+  params.append('email', currentUser.email);
+  params.append('itemname', itemname);
+  params.append('startDate', startDate);
+  params.append('durationHours', duration);
+  params.append('wholeDay', wholeDay);
+
+  const res = await fetch(`${API_BASE}/Booking?${params}`, {
+    method: 'POST'
+  });
+
+  if (res.ok) {
+    alert('Booking successful!');
+    loadItems();
+    loadBookings();
+  } else {
+    const msg = await res.text();
+    alert(`Booking failed: ${msg}`);
+  }
+}
+
+
+async function cancelBooking(id) 
+{
+  if (!confirm('Are you sure you want to cancel this booking?')) return;
+
+  const res = await fetch(`${API_BASE}/Booking/cancel?id=${id}`, { method: 'DELETE' });
+  if (res.ok) {
+    alert('Booking cancelled.');
+    // remove the booking element instantly
+    document.querySelector(`#booking-${id}`)?.remove();
+    //reload availability after dely
+    setTimeout(() => loadItems(), 300);
+    loadBookings();
+  } else {
+    const msg = await res.text();
+    alert('Failed to cancel booking.');
+  }
+}
+
+// admin functions
+async function loadAllBookings() 
+{
+  console.log("Admin clicked: Manage Bookings");
+  const res = await fetch(`${API_BASE}/Booking`);
+  if (!res.ok) return alert('Failed to load bookings');
+  const bookings = await res.json();
+  const container = document.getElementById('admin-content');
+  container.innerHTML = '<h3 class="text-lg font-semibold">All Bookings</h3>';
+    bookings.forEach(b => {
+    const div = document.createElement('div');
+    div.className = 'flex justify-between items-center p-3 border rounded mb-2';
+    div.innerHTML = `
+      <span>${b.userName} booked ${b.itemName} (${b.startDate} → ${b.endDate})/span>
+      <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 admin-btn" onclick="adminCancelBooking(${b.id})">Cancel</button>
+      <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 admin-btn" onclick="adminChangeBooking(${b.id})">Change</button>`;
+          container.appendChild(div);
+  });
+}
+
+async function adminCancelBooking(id) {
+  if (!confirm('Are you sure you want to cancel this booking?')) return;
+
+  const res = await fetch(`${API_BASE}/Booking/cancel?id=${id}`, { method: 'DELETE' });
+  if (res.ok) {
+    alert('Booking cancelled.');
+    document.getElementById('view-all-bookings-btn').click(); // reload all bookings
+    loadItems(); // refresh item availability
+  } else {
+    alert('Failed to cancel booking.');
+  }
+}
+
+let bookingToChange = null; // global variable to track the booking being changed
+
+async function adminChangeBooking(id) 
+{
+  if (!currentUser || !currentUser.isAdmin) return alert('Admin only.');
+
+  // Fetch the booking details
+  const res = await fetch(`${API_BASE}/Booking`);
+  if (!res.ok) return alert('Failed to load bookings.');
+
+  const bookings = await res.json();
+
+  const booking = bookings.find(b => b.id === id);
+  if (!booking) return alert('Booking not found.');
+
+  bookingToChange = booking.id;       // mark this booking for editing
+  selectedItem = booking.itemName;    // pre-select the item
+
+  // Pre-fill the booking form
+  document.getElementById('selected-item-name').textContent = booking.itemName;
+  document.getElementById('startDate').value = new Date(booking.startDate).toISOString().slice(0, 16);
+
+  const durationHours = (new Date(booking.endDate) - new Date(booking.startDate)) / (1000 * 60 * 60);
+  document.getElementById('duration').value = durationHours >= 24 ? '' : durationHours;
+  document.getElementById('wholeDay').checked = durationHours >= 24;
+
+  // Show booking step and hide items list
+  document.getElementById('items-step').style.display = 'none';
+  document.getElementById('booking-step').style.display = 'block';
+
+  // Update the "Book" button to handle editing
+  const bookBtn = document.getElementById('book-btn');
+  bookBtn.textContent = 'Update Booking';
+  bookBtn.onclick = async () => 
+  {
+    if (!currentUser) return alert('Please log in.');
+    if (!selectedItem) return alert('No item selected.');
+
+    const startDate = document.getElementById('startDate').value;
+    const duration = document.getElementById('duration').value;
+    const wholeDay = document.getElementById('wholeDay').checked;
+
+    if (!startDate) return alert('Please select a start time.');
+
+    const url = new URL(
+        bookingToChange 
+          ? `${API_BASE}/Booking/change`  // if editing
+          : `${API_BASE}/Booking/book`    // if new booking
+      );
+
+    // common parameters 
+    url.searchParams.append('username', currentUser.username);
+    url.searchParams.append('email', currentUser.email);
+    url.searchParams.append('itemname', selectedItem);
+    url.searchParams.append('startDate', startDate);
+    if (duration) url.searchParams.append('durationHours', duration);
+    if (wholeDay) url.searchParams.append('wholeDay', wholeDay);
+    // Only include bookingId if it’s really a change
+    if (bookingToChange) {
+      url.searchParams.append('bookingId', bookingToChange);
+    }
+
+    const method = bookingToChange ? 'PUT' : 'POST';
+    const res = await fetch(url, { method });
+
+    if (res.ok) {
+      alert(bookingToChange ? 'Booking updated!' : 'Booking successful!');
+      bookingToChange = null;
+      bookBtn.textContent = 'Book';
+      loadItems();
+      loadBookings();
+      showItemsStep();
+    } else {
+      const msg = await res.text();
+      alert(`Failed to update booking: ${msg}`);
+
+      loadAllBookings();
+    };
+  }
+}
+
+async function loadAllItems() {
+  if (!currentUser || !currentUser.isAdmin) {
+    alert('Admins only.');
+    return;
+  }
+
+  console.log("Admin clicked: Manage Items");
+
+  const container = document.getElementById('admin-content');
+  if (!container) {
+    console.error("No element with id='admin-content' found.");
+    return;
+  }
+
+  container.innerHTML = '<h3 class="text-lg font-semibold mb-2">Manage Items</h3>';
+
+  try {
+    const res = await fetch(`${API_BASE}/Item/all`);
+    if (!res.ok) {
+      throw new Error(`Failed to load items: ${res.status}`);
+    }
+
+    const items = await res.json();
+    console.log("Loaded items:", items);
+
+    if (!items.length) {
+      container.innerHTML += '<p>No items found.</p>';
+      return;
+    }
+
+    // Dropdown
+    const select = document.createElement('select');
+    select.id = 'item-select';
+    select.className = 'border p-2 rounded w-full mb-2';
+    select.innerHTML = '<option value="">-- Select an item --</option>';
+    items.forEach(i => {
+      const opt = document.createElement('option');
+      opt.value = i.id;
+      opt.textContent = i.name;
+      select.appendChild(opt);
+    });
+    container.appendChild(select);
+
+    // Input for renaming
+    const input = document.createElement('input');
+    input.id = 'new-item-name';
+    input.type = 'text';
+    input.placeholder = 'Enter new name';
+    input.className = 'border p-2 rounded w-full mb-2';
+    container.appendChild(input);
+
+    // Buttons
+    const btnDiv = document.createElement('div');
+    btnDiv.className = 'flex gap-2';
+
+    // Rename button
+    const renameBtn = document.createElement('button');
+    renameBtn.textContent = 'Rename';
+    renameBtn.className = 'bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600';
+    renameBtn.onclick = async () => {
+      const id = select.value;
+      const newName = input.value.trim();
+      if (!id) return alert('Select an item first.');
+      if (!newName) return alert('Enter a new name.');
+
+      const params = new URLSearchParams({ id, name: newName, isAvailable: true });
+      const res = await fetch(`${API_BASE}/Item/update?${params}`, { method: 'PUT' });
+
+      if (res.ok) {
+        alert('Item renamed successfully.');
+        loadAllItems();
+        loadItems();
+      } else {
+        const msg = await res.text();
+        alert(`Failed to rename: ${msg}`);
+      }
+    };
+
+    // Delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.className = 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600';
+    deleteBtn.onclick = async () => {
+      const id = select.value;
+      if (!id) return alert('Select an item first.');
+      if (!confirm('Are you sure you want to delete this item?')) return;
+
+      const res = await fetch(`${API_BASE}/Item/delete?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        alert('Item deleted successfully.');
+        loadAllItems();
+        loadItems();
+      } else {
+        const msg = await res.text();
+        alert(`Failed to delete: ${msg}`);
+      }
+    };
+
+     // Add Item
+    const addBtn = document.createElement('button');
+    addBtn.textContent = 'Add';
+    addBtn.className = 'bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600';
+    addBtn.onclick = async () => {
+      const id = select.value;
+      const newName = input.value.trim();
+
+      // Only allow add if no item is selected and a name is provided
+      if (id) return alert('Deselect an item to add a new one.');
+
+      const res = await fetch(`${API_BASE}/Item/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: newName })
+      });
+
+      if (res.ok) {
+        alert('Item added successfully.');
+        loadAllItems();
+        loadItems();
+      } else {
+        const msg = await res.text();
+        alert(`Failed to add item: ${msg}`);
+      }
+  };
+
+    btnDiv.appendChild(renameBtn);
+    btnDiv.appendChild(deleteBtn);
+    btnDiv.appendChild(addBtn);
+    container.appendChild(btnDiv);
+
+  } catch (err) {
+    console.error("Error in loadAllItems():", err);
+    alert('Error loading items. Check console for details.');
+  }
+}
+
+
+function logout() 
+{
+  localStorage.removeItem("currentUser");
+  currentUser = null;
+  showLogin();
+  document.getElementById('logout-btn').classList.add('hidden'); // hide logout
+  document.getElementById('admin-section').classList.add('hidden');
+  document.getElementById('booking-section').classList.add('hidden');
+
+}
+</script>
+
+  <script>
+// TODO add other sectons and correct translation
+    const translations = {
+      en: {
+        intro: "I’m a Software Engineer specifying in Industrial Automation & SCADA Integration.",
+        'about-title': "About Me",
+        'about-text': "I'm a multidisciplinary designer focused on meaningful interactions and visual harmony."
+      },
+      es: {
+        intro: "Diseño experiencias reflexivas e inspiradas en la naturaleza.",
+        'about-title': "Sobre mí",
+        'about-text': "Soy una diseñadora multidisciplinaria enfocada en interacciones significativas y armonía visual."
+      },
+      pl: {
+        intro: "Projektuję przemyślane, inspirowane naturą doświadczenia.",
+        'about-title': "O mnie",
+        'about-text': "Jestem multidyscyplinarną projektantką skupioną na znaczących interakcjach i wizualnej harmonii."
+      }
+    };
+
+ function setLanguage(lang) {
+      for (const id in translations[lang]) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = translations[lang][id];
+      }
+      localStorage.setItem('language', lang);
+      document.getElementById('langDropdown').classList.add('hidden');
+    }
+
+    // Load saved language
+    window.onload = () => {
+      const lang = localStorage.getItem('language') || 'en';
+      setLanguage(lang);
+    };
+
+    // Handle dropdown toggle and double-click navigation
+    const langButton = document.getElementById('langButton');
+    const langDropdown = document.getElementById('langDropdown');
+    let clickTimer;
+
+    langButton.addEventListener('click', () => {
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => {
+        langDropdown.classList.toggle('hidden');
+      }, 250);
+    });
+
+    langButton.addEventListener('dblclick', () => {
+      clearTimeout(clickTimer);
+      langDropdown.classList.add('hidden');
+      document.getElementById('language').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>

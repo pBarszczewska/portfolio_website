@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paulina Barszczewska</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+     <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        color: #2e3d3a;
+        background-color: #fafafa;
+        scroll-behavior: smooth;
+      }
+      header {
+        /* minimal transparent background */
+        background-color: rgba(255,255,255,0.8);
+        backdrop-filter: blur(10px);
+      }
+
+      /* pattern background */
+      .pattern-bg {
+        background-image: url('https://cdn.pixabay.com/photo/2021/12/29/12/08/line-art-6901479_1280.jpg');
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
+  </head>
+
+  <body class="relative">
+
+
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50">
+      <nav class="max-w-5xl mx-auto flex justify-between items-center py-4 px-6">
+        <h1 class="text-xl font-semibold text-gray-800">Paulina Barszczewska</h1>
+        <ul class="flex space-x-6 text-gray-600 font-medium">
+          <li><a href="#home" class="hover:text-gray-800">Home</a></li>
+          <li><a href="#about" class="hover:text-gray-800">About</a></li>
+          <li><a href="#work" class="hover:text-gray-800">Work</a></li>
+          <li><a href="#contact" class="hover:text-gray-800">Contact</a></li>
+          <li class="relative">
+            <button id="langButton" class="hover:text-gray-800 focus:outline-none">Language ▼</button>
+            <!-- Dropdown -->
+            <div id="langDropdown" class="absolute hidden right-0 mt-2 w-32 bg-white/90 backdrop-blur-md rounded-lg shadow-lg text-center">
+              <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('en')">🇬🇧 English</button>
+              <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('es')">🇪🇸 Español</button>
+              <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('pl')">🇵🇱 Polski</button>
+        </div>
+      </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="pt-20 space-y-32">
+
+      <!-- Hero / Intro with image -->
+      <section id="home" class="max-w-5xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
+        <!-- Left side: text -->
+        <div>
+          <h2 class="text-5xl md:text-6xl font-semibold mb-4">Paulina Barszczewska</h2>
+          <p id="intro" class="text-xl text-gray-700 mb-8">
+            I’m a Software Engineer specifying in Industrial Automation & SCADA Integration.
+          </p>
+          <a
+            href="Booking.html"
+            class="inline-block bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-lg transition"
+          >
+            Meet me
+          </a>
+        </div>
+
+        <!-- Right side: image -->
+        <div class="flex justify-center md:justify-end">
+          <img
+            src="images/Face.jpg"
+            class="rounded-3xl w-64 h-64 object-cover shadow-lg border-4 border-white"
+          />
+        </div>
+      </section>
+
+      <!-- About Me -->
+      <section id="about" class="pattern-bg bg-fixed w-full mx-auto px-6 py-16 rounded-2xl shadow-md">
+        <h3 class="text-4xl font-semibold mb-6 text-gray-800">About Me</h3>
+        <div class="bg-white/80 rounded-2xl p-6">
+          <p id="aboutMe" class="text-lg text-gray-600 leading-relaxed">
+            Software-oriented automation engineer with over 10 years of experience developing and integrating PLC and SCADA systems in industrial environments.
+            Skilled in C# and .NET development for automation, data acquisition, and system integration.
+            <br>
+            Experienced in bridging OT and IT layers — from field control logic to supervisory applications and data systems.
+            Passionate about building reliable, maintainable software that enhances process visibility and efficiency.
+            <br>
+            Currently transitioning toward a more software-focused role, leveraging my deep understanding of automation systems to develop smarter, data-driven industrial applications.
+          </p>
+        </div>
+      </section>
+
+      <!-- My Work -->
+      <section id="work" class="max-w-4xl mx-auto px-6 py-16">
+        <h3 class="text-4xl font-semibold mb-6 text-gray-800">My Work</h3>
+        <div id="myWorkJob1" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
+        <div id="myWorkJob2" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
+      </section>
+
+      <!-- Language -->
+      <section id="language" class="pattern-bg bg-fixed w-full mx-auto px-6 py-16 rounded-2xl shadow-md">
+        <h3 class="text-4xl font-semibold mb-6 text-gray-800">Language</h3>
+        <div class="bg-white/80 rounded-2xl p-6">
+          <p id="languageText" class="text-lg text-gray-600 leading-relaxed mb-8">
+            Native Polish speaker, fluent in English (C1 certified) and conversational to fluent in Spanish (B2 level).
+          </p>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="max-w-4xl mx-auto px-6 py-16">
+        <h3 class="text-4xl font-semibold mb-6 text-gray-800">Contact Me</h3>
+        <p id="contactText" class="text-lg text-gray-600 mb-4">
+          Want to collaborate or have a question? Reach out.
+        </p>
+        <a href="mailto:youremail@example.com" class="text-gray-800 underline">
+          pu.barszczewska@gmail.com
+        </a>
+      </section>
+
+    </main>
+
+    <footer id="rights" class="text-center mt-20 mb-10 text-sm text-gray-500">
+      © <span id="year"></span> Paulina Barszczewska. All rights reserved.
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+  <script>
+    //API BASE will have to be changed before publishing !!!!!!!!!!!!!!!!!!
+    const API_BASE = "http://localhost:5011";
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (currentUser) {
+            console.log("Logged in as:", currentUser.username);
+        } else {
+            console.log("No user found in localStorage.");
+        }
+    });
+
+    const translations = {
+      en: {
+        intro: "I’m a Software Engineer specifying in Industrial Automation & SCADA Integration.",
+        languageText: "Native Polish speaker, fluent in English (C1 certified) and conversational to fluent in Spanish (B2 level).",
+        contactText: "Want to collaborate or have a question? Reach out.",
+        myWorkJob1: `
+           <p class="font-semibold">Liebherr - SCADA & Industrial Automation Software Engineer</p>
+          <ul class="list-disc ml-6 mb-6">
+            <li>Delivered end-to-end support and improvements for a mission-critical SCADA platform built in C#/.NET, handling installation, configuration, diagnostics, and performance optimization across Windows environments.</li>
+            <li>Managed SQL databases used by the SCADA system, including schema updates, table creation, performance tuning, and custom data queries.</li>
+            <li>Automated routine system administration tasks by creating batch scripts and maintenance utilities.</li>
+            <li>Built AutoIT automation tools, including a LAN-wide time synchronization application and a pre-deployment device configuration/testing tool used on the production line.</li>
+          </ul>`,
+        myWorkJob2: `
+          <p class="font-semibold">Creating personal website with booking system (Web API Development):</p>
+          <ul class="list-disc ml-6">
+            <li>C# and ASP.NET Core Web API</li>
+            <li>RESTful API design</li>
+            <li>Entity Framework Core</li>
+            <li>PostgreSQL database</li>
+            <li>SendGrid email integration</li>
+            <li>JavaScript, HTML, TailwindCSS</li>
+            <li>Git & version control</li>
+            <li>JSON handling and API integration</li>
+            <li>VS Code & Linux Terminal</li>
+          </ul>`,
+        aboutMe: "Software-oriented automation engineer with over 10 years of experience developing and integrating PLC and SCADA systems in industrial environments. Skilled in C# and .NET development for automation, data acquisition, and system integration.",
+      
+      },
+      es: {
+        intro: "Soy ingeniera de software especializada en automatización industrial e integración SCADA.",
+        languageText: "Nativa de polaco, hablo inglés con fluidez (nivel C1 certificado) y tengo un nivel avanzado de español (nivel B2).",
+        contactText: "¿Quiere colaborar o tiene alguna pregunta? Pongase en contacto conmigo.",
+        myWorkJob1: `
+           <p class="font-semibold">Liebherr - Ingeniero de software de SCADA y automatización industrial</p>
+          <ul class="list-disc ml-6 mb-6">
+            <li>Proporcioné soporte integral y mejoras para una plataforma SCADA de misión crítica creada en C#/.NET, encargándome de la instalación, la configuración, el diagnóstico y la optimización del rendimiento en entornos Windows.</li>
+            <li>Gestión de bases de datos SQL utilizadas por el sistema SCADA, incluyendo actualizaciones de esquemas, creación de tablas, ajuste del rendimiento y consultas de datos personalizadas.</li>
+            <li>Automatización de tareas rutinarias de administración del sistema mediante la creación de scripts por lotes y utilidades de mantenimiento.</li>
+            <li>Creación de herramientas de automatización AutoIT, incluyendo una aplicación de sincronización horaria en toda la LAN y una herramienta de configuración/prueba de dispositivos previa a la implementación utilizada en la línea de producción.</li>
+          </ul>`,
+        myWorkJob2: `
+          <p class="font-semibold">Creación de este sitio web personal con sistema de reservas (Web API):</p>
+          <ul class="list-disc ml-6">
+            <li>C# y ASP.NET Core Web API</li>
+            <li>Diseño de API RESTful</li>
+            <li>Entity Framework Core</li>
+            <li>Base de datos PostgreSQL</li>
+            <li>Integración de correo electrónico SendGrid</li>
+            <li>JavaScript, HTML, TailwindCSS</li>
+            <li>Git y control de versiones</li>
+            <li>Manejo de JSON e integración de API</li>
+            <li>VS Code y Linux Terminal</li>
+          </ul>`,
+        aboutMe: "Ingeniera de automatización orientada al software con más de 10 años de experiencia en el desarrollo e integración de sistemas PLC y SCADA en entornos industriales. Experta en desarrollo C# y .NET para automatización, adquisición de datos e integración de sistemas"
+      },
+      pl: {
+        intro: "Jestem inżynierka electrotechniki specjalizującą się w programowaniu, automatyce przemysłowej i integracji SCADA.",
+        languageText: "Polka, mowiaca plynnie po angielsku (z certyfikatem C1), porozumiewajaca sie komunikatywnie po hiszpansku (poziom B2).",
+        contactText: "Chcesz nawiązać współpracę lub masz pytanie? Zapraszam do kontaktu.",
+        myWorkJob1: `
+           <p class="font-semibold">Liebherr – inżynier oprogramowania SCADA i automatyki przemysłowej</p>
+          <ul class="list-disc ml-6 mb-6">
+            <li>Kompleksowe wsparcie i ulepszenia dla platformy SCADA zbudowanej w języku C#/.NET, obejmujące instalację, konfigurację, diagnostykę i optymalizację wydajności w środowiskach Windows.</li>
+            <li>Zarządzanie bazami danych SQL używanymi przez system SCADA, w tym aktualizacje schematów, tworzenie tabel, dostosowywanie wydajności i niestandardowe zapytania dotyczące danych.</li>
+            <li>Automatyzacja rutynowych zadań administracyjnych systemu poprzez tworzenie skryptów wsadowych i narzędzi konserwacyjnych.</li>
+            <li>Tworzenie narzędzi automatyzacji w AutoIT, w tym aplikacji do synchronizacji czasu w sieci LAN oraz narzędzia do konfiguracji/testowania urządzeń przed wdrożeniem, używanego na linii produkcyjnej.</li>
+          </ul>`,
+        myWorkJob2: `
+          <p class="font-semibold">Tworzenie osobistej strony internetowej z systemem rezerwacji (Web API):</p>
+          <ul class="list-disc ml-6">
+            <li>C# i ASP.NET Core Web API</li>
+            <li>Projektowanie interfejsu API RESTful</li>
+            <li>Entity Framework Core</li>
+            <li>Baza danych PostgreSQL</li>
+            <li>Integracja poczty elektronicznej SendGrid</li>
+            <li>JavaScript, HTML, TailwindCSS</li>
+            <li>Git i kontrola wersji</li>
+            <li>Obsługa JSON i integracja API</li>
+            <li>VS Code i Linux Terminal</li>
+          </ul>`,
+        aboutMe: "Inżynierka electrotechniki zorientowana na programowianiu,z ponad 10-letnim doświadczeniem w opracowywaniu i integrowaniu systemów PLC i SCADA w środowiskach przemysłowych. Z umiejętnościami w zakresie programowania w językach C# i .NET w zakresie automatyki, gromadzenia danych i integracji systemów"
+      }
+    };
+
+ function setLanguage(lang) {
+      for (const id in translations[lang]) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const value = translations[lang][id];
+      // IDs that should accept HTML (lists, formatted text, etc.)
+      const htmlFields = ["myWorkJob1", "myWorkJob2"];
+
+      if (htmlFields.includes(id)) {
+        el.innerHTML = value;    // allow HTML
+      } else {
+        el.textContent = value;  // plain text only
+      }
+    }
+
+      localStorage.setItem('language', lang);
+      document.getElementById('langDropdown').classList.add('hidden');
+   }
+
+    // Load saved language
+    window.onload = () => {
+      const lang = localStorage.getItem('language') || 'en';
+      setLanguage(lang);
+    };
+
+    // Handle dropdown toggle and double-click navigation
+    const langButton = document.getElementById('langButton');
+    const langDropdown = document.getElementById('langDropdown');
+    let clickTimer;
+
+    langButton.addEventListener('click', () => {
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => {
+        langDropdown.classList.toggle('hidden');
+      }, 250);
+    });
+
+    langButton.addEventListener('dblclick', () => {
+      clearTimeout(clickTimer);
+      langDropdown.classList.add('hidden');
+      document.getElementById('language').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+
+  </body>
+</html>
