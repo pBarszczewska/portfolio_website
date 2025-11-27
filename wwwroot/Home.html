@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Paulina Barszczewska</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com/3.4.0"></script>
      <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 
@@ -33,16 +33,15 @@
 
   <body class="relative">
 
-
     <!-- Navigation -->
     <header class="fixed top-0 left-0 w-full z-50">
       <nav class="max-w-5xl mx-auto flex justify-between items-center py-4 px-6">
         <h1 class="text-xl font-semibold text-gray-800">Paulina Barszczewska</h1>
         <ul class="flex space-x-6 text-gray-600 font-medium">
-          <li><a href="#home" class="hover:text-gray-800">Home</a></li>
-          <li><a href="#about" class="hover:text-gray-800">About</a></li>
-          <li><a href="#work" class="hover:text-gray-800">Work</a></li>
-          <li><a href="#contact" class="hover:text-gray-800">Contact</a></li>
+          <li><a id="homeMenu" href="#home" class="hover:text-gray-800">Home</a></li>
+          <li><a id="aboutMenu" href="#about" class="hover:text-gray-800">About</a></li>
+          <li><a id="workMenu" href="#work" class="hover:text-gray-800">Work</a></li>
+          <li><a id="contactMenu" href="#contact" class="hover:text-gray-800">Contact</a></li>
           <li class="relative">
             <button id="langButton" class="hover:text-gray-800 focus:outline-none">Language ▼</button>
             <!-- Dropdown -->
@@ -50,15 +49,15 @@
               <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('en')">🇬🇧 English</button>
               <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('es')">🇪🇸 Español</button>
               <button class="block w-full py-2 hover:bg-gray-700" onclick="setLanguage('pl')">🇵🇱 Polski</button>
-        </div>
-      </li>
+            </div>
+          </li>
         </ul>
       </nav>
     </header>
 
     <main class="pt-20 space-y-32">
 
-      <!-- Hero / Intro with image -->
+      <!-- Intro with image -->
       <section id="home" class="max-w-5xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
         <!-- Left side: text -->
         <div>
@@ -66,10 +65,7 @@
           <p id="intro" class="text-xl text-gray-700 mb-8">
             I’m a Software Engineer specifying in Industrial Automation & SCADA Integration.
           </p>
-          <a
-            href="Booking.html"
-            class="inline-block bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-lg transition"
-          >
+          <a id="meetMeButton" href="Booking.html" class="inline-block bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-lg transition">
             Meet me
           </a>
         </div>
@@ -85,30 +81,24 @@
 
       <!-- About Me -->
       <section id="about" class="pattern-bg bg-fixed w-full mx-auto px-6 py-16 rounded-2xl shadow-md">
-        <h3 class="text-4xl font-semibold mb-6 text-gray-800">About Me</h3>
+        <h3 id="aboutHeader" class="text-4xl font-semibold mb-6 text-gray-800">About Me</h3>
         <div class="bg-white/80 rounded-2xl p-6">
-          <p id="aboutMe" class="text-lg text-gray-600 leading-relaxed">
-            Software-oriented automation engineer with over 10 years of experience developing and integrating PLC and SCADA systems in industrial environments.
-            Skilled in C# and .NET development for automation, data acquisition, and system integration.
-            <br>
-            Experienced in bridging OT and IT layers — from field control logic to supervisory applications and data systems.
-            Passionate about building reliable, maintainable software that enhances process visibility and efficiency.
-            <br>
-            Currently transitioning toward a more software-focused role, leveraging my deep understanding of automation systems to develop smarter, data-driven industrial applications.
-          </p>
+          <div id="aboutMeJob1" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
+          <div id="aboutMeJob2" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
+          <div id="aboutMeJob3" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
         </div>
       </section>
 
       <!-- My Work -->
       <section id="work" class="max-w-4xl mx-auto px-6 py-16">
-        <h3 class="text-4xl font-semibold mb-6 text-gray-800">My Work</h3>
+        <h3 id="workHeader" class="text-4xl font-semibold mb-6 text-gray-800">My Work</h3>
         <div id="myWorkJob1" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
         <div id="myWorkJob2" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
       </section>
 
       <!-- Language -->
       <section id="language" class="pattern-bg bg-fixed w-full mx-auto px-6 py-16 rounded-2xl shadow-md">
-        <h3 class="text-4xl font-semibold mb-6 text-gray-800">Language</h3>
+        <h3 id="languageHeader" class="text-4xl font-semibold mb-6 text-gray-800">Language</h3>
         <div class="bg-white/80 rounded-2xl p-6">
           <p id="languageText" class="text-lg text-gray-600 leading-relaxed mb-8">
             Native Polish speaker, fluent in English (C1 certified) and conversational to fluent in Spanish (B2 level).
@@ -118,13 +108,15 @@
 
       <!-- Contact -->
       <section id="contact" class="max-w-4xl mx-auto px-6 py-16">
-        <h3 class="text-4xl font-semibold mb-6 text-gray-800">Contact Me</h3>
+        <h3 id="contactHeader" class="text-4xl font-semibold mb-6 text-gray-800">Contact Me</h3>
         <p id="contactText" class="text-lg text-gray-600 mb-4">
           Want to collaborate or have a question? Reach out.
         </p>
-        <a href="mailto:youremail@example.com" class="text-gray-800 underline">
-          pu.barszczewska@gmail.com
-        </a>
+        <div id="email-container" class="mb-6"></div>
+        <div id="social-links" class="flex space-x-4 mb-4"></div>
+        <div id="meetMeButton2" href="Booking.html" class="inline-block bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-lg w-fit mx-auto transition mb-4">
+            Meet me
+        </div>
       </section>
 
     </main>
@@ -176,8 +168,22 @@
             <li>JSON handling and API integration</li>
             <li>VS Code & Linux Terminal</li>
           </ul>`,
-        aboutMe: "Software-oriented automation engineer with over 10 years of experience developing and integrating PLC and SCADA systems in industrial environments. Skilled in C# and .NET development for automation, data acquisition, and system integration.",
-      
+        aboutMeJob1: "Software-oriented automation engineer with over 10 years of experience developing and integrating PLC and SCADA systems in industrial environments. Skilled in C# and .NET development for automation, data acquisition, and system integration.",
+        aboutMeJob2: "Experienced in bridging OT and IT layers — from field control logic to supervisory applications and data systems. Passionate about building reliable, maintainable software that enhances process visibility and efficiency.",
+        aboutMeJob3: "Currently transitioning toward a more software-focused role, leveraging my deep understanding of automation systems to develop smarter, data-driven industrial applications.",
+        aboutHeader: "About Me",
+        aboutMenu: "About Me",
+        contactHeader:"Contact",
+        contactMenu: "Contact",
+        languageHeader:"Language",
+        langButton:"Language",
+        workHeader:"My work",
+        workMenu:"My work",
+        homeMenu:"Home",
+        rights:"Paulina Barszczewska. All rights reserved.",
+        meetMeButton:"Meet me",
+        meetMeButton2:"Meet me"
+
       },
       es: {
         intro: "Soy ingeniera de software especializada en automatización industrial e integración SCADA.",
@@ -204,7 +210,21 @@
             <li>Manejo de JSON e integración de API</li>
             <li>VS Code y Linux Terminal</li>
           </ul>`,
-        aboutMe: "Ingeniera de automatización orientada al software con más de 10 años de experiencia en el desarrollo e integración de sistemas PLC y SCADA en entornos industriales. Experta en desarrollo C# y .NET para automatización, adquisición de datos e integración de sistemas"
+        aboutMeJob1: "Ingeniera de automatización orientada al software con más de 10 años de experiencia en el desarrollo e integración de sistemas PLC y SCADA en entornos industriales. Experta en desarrollo C# y .NET para automatización, adquisición de datos e integración de sistemas",
+        aboutMeJob2: "Tengo experiencia en conectar las capas de OT e IT, desde la lógica de control hasta las aplicaciones de supervisión y los sistemas de datos. Me apasiona crear software fiable y fácil de mantener que mejore la visibilidad y la eficiencia de los procesos.",
+        aboutMeJob3: "Actualmente me centro en un puesto más orientado al software, aprovechando mi profundo conocimiento de los sistemas de automatización para desarrollar aplicaciones industriales más inteligentes y basadas en datos.",
+        aboutHeader: "Sobre Mi",
+        aboutMenu: "Sobre Mi",
+        contactHeader:"Contacto",
+        contactMenu:"Contacto",
+        languageHeader:"Lengua",
+        langButton:"Lengua",
+        workHeader:"Mi trabajo",
+        workMenu:"Mi trabajo",
+        homeMenu:"Inicio",
+        rights:"Paulina Barszczewska. Todos los derechos reservados.",
+        meetMeButton:"Hablemos",
+        meetMeButton2:"Hablemos"
       },
       pl: {
         intro: "Jestem inżynierka electrotechniki specjalizującą się w programowaniu, automatyce przemysłowej i integracji SCADA.",
@@ -231,7 +251,21 @@
             <li>Obsługa JSON i integracja API</li>
             <li>VS Code i Linux Terminal</li>
           </ul>`,
-        aboutMe: "Inżynierka electrotechniki zorientowana na programowianiu,z ponad 10-letnim doświadczeniem w opracowywaniu i integrowaniu systemów PLC i SCADA w środowiskach przemysłowych. Z umiejętnościami w zakresie programowania w językach C# i .NET w zakresie automatyki, gromadzenia danych i integracji systemów"
+        aboutMeJob1: "Inżynierka electrotechniki zorientowana na programowianiu,z ponad 10-letnim doświadczeniem w opracowywaniu i integrowaniu systemów PLC i SCADA w środowiskach przemysłowych. Z umiejętnościami w zakresie programowania w językach C# i .NET w zakresie automatyki, gromadzenia danych i integracji systemów",
+        aboutMeJob2: "Doświadczona w łączeniu warstw OT i IT — od logiki sterowania po aplikacje nadzorcze i systemy danych. Pasjonatka tworzenia niezawodnego, łatwego w utrzymaniu oprogramowania, które zwiększa przejrzystość i wydajność procesów.",
+        aboutMeJob3: "Obecnie przechodzę do roli bardziej skoncentrowanej na oprogramowaniu, wykorzystując swoją dogłębną wiedzę na temat systemów automatyki do opracowywania inteligentniejszych, opartych na danych aplikacji przemysłowych.",
+        aboutHeader: "O mnie",
+        aboutMenu: "O mnie",
+        contactHeader:"Kontakt",
+        contactMenu: "Kontakt",
+        languageHeader:"Jezyk",
+        langButton:"Jezyk",
+        workHeader:"O pracy",
+        workMenu:"O pracy",
+        homeMenu:"Start",
+        rights:"Paulina Barszczewska. Wszelkie prawa zastrzeżone.",
+        meetMeButton:"Porozmawiajmy",
+        meetMeButton2:"Porozmawiajmy"
       }
     };
 
@@ -277,7 +311,49 @@
       langDropdown.classList.add('hidden');
       document.getElementById('language').scrollIntoView({ behavior: 'smooth' });
     });
+
+
+    async function loadContactData() {
+      try {
+        const response = await fetch('/api/SocialLinks');
+        const contactData = await response.json();
+        console.log('API Response:', contactData);
+        
+        // Create the mailto link dynamically
+        const emailContainer = document.getElementById('email-container');
+        emailContainer.innerHTML = `
+            <a href="mailto:${contactData.email}" 
+               class="text-gray-800 underline inline-block hover:text-blue-600 transition-colors">
+                ${contactData.email}
+            </a>`;
+                
+        const container = document.getElementById('social-links');
+        container.innerHTML = ''; // Clear loading state
+                
+        contactData.socialLinks.forEach(link => {
+          const linkElement = document.createElement('a');
+          linkElement.href = link.url;
+          linkElement.target = "_blank";
+          linkElement.rel = "noopener noreferrer";
+          linkElement.className = "flex items-center justify-center w-12 h-12 bg-gray-200 hover:bg-blue-500 text-gray-700 hover:text-white rounded-full transition-all duration-300 transform hover:scale-110";
+          linkElement.title = link.platform; 
+                    
+          linkElement.innerHTML = `<i class="${link.iconClass} text-xl"></i>`; 
+                    
+          container.appendChild(linkElement);
+          });
+                
+        } catch (error) {
+          console.error('Error loading social links or email:', error);
+          document.getElementById('social-links').innerHTML = 
+            '<p class="text-red-500">Failed to load social links</p>';
+        }
+      }
+
+        document.addEventListener('DOMContentLoaded', loadContactData);
+
   </script>
+
 
   </body>
 </html>
