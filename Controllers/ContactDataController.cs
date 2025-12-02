@@ -15,6 +15,7 @@ public class SocialLinksController(IConfiguration configuration) : ControllerBas
     public IActionResult GetContactData()
     {
         var email = _configuration["EmailSettings:SenderEmail"];
+        if (email == null) return NotFound($"Incorrect email address: '{email}'");
         
         var contactData = new ContactData
         {
