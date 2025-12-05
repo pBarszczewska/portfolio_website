@@ -23,41 +23,6 @@ public class ItemController : ControllerBase
     }
 
 
-    [HttpGet("available")]
-    public IActionResult GetAvailableItems()
-    {
-        // first, load all bookings into memory
-        var now = DateTime.UtcNow;
-        var bookings = _context.Bookings
-        .Where(b => b.EndDate > now)
-        .ToList();
-
-        // then, load all items into memory
-        var items = _context.Items.ToList();
-
-        // Update IsAvailable dynamically based on current bookings
-        foreach (var item in items)
-        {
-            item.IsAvailable = !bookings
-                .Any(b => b.ItemId == item.Id && b.EndDate > now);
-        }
-        _context.SaveChanges();
-
-        var availableItems = items.Where(i => i.IsAvailable).Select(i => new
-        {
-            i.Id,
-            i.Name,
-            i.IsAvailable
-        })
-            .ToList();
-
-        if (!availableItems.Any())
-            return Ok("No items are currently available.");
-
-        return Ok(availableItems);
-    }
-
-
     [HttpPost("add")]
     public async Task<ActionResult<Item>> Create(Item item)
     {
@@ -82,13 +47,12 @@ public class ItemController : ControllerBase
 
 
     [HttpPut("update")]
-    public IActionResult UpdateItem(int id, string name, bool isAvailable)
+    public IActionResult UpdateItem(int id, string name)
     {
         var item = _context.Items.FirstOrDefault(i => i.Id == id);
         if (item == null) return NotFound("Item not found.");
 
         item.Name = name;
-        item.IsAvailable = isAvailable;
         _context.SaveChanges();
 
         return Ok("Item updated successfully.");

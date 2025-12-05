@@ -33,20 +33,15 @@ public class BookingController : ControllerBase
         // Look up the user
         var user = _context.Users.FirstOrDefault(u => u.Username.ToLower().Trim() == username.ToLower().Trim());
 
-        // this cannot be used in Postgres
-        // var user = _context.Users.FirstOrDefault(u => u.Username.Trim().Equals(username.Trim(), StringComparison.OrdinalIgnoreCase));
         if (user == null) return NotFound($"User '{username}' not found");
         if (email == null) return NotFound($"Email '{email}' not found");
 
         // look up for item
         var item = _context.Items.FirstOrDefault(i => i.Name.ToLower().Trim() == itemname.ToLower().Trim());
         if (item == null) return NotFound($"Item '{itemname}' not found");
-        if (!item.IsAvailable) return BadRequest($"Item '{itemname}' already booked");
 
         DateTime startLocal = DateTime.Parse(startDate);
         DateTime startUtc = TimeZoneInfo.ConvertTimeToUtc(startLocal, TimeZoneInfo.Local);
-        // Parse and convert to UTC
-        //var startUtc = DateTime.SpecifyKind(startDateStr, DateTimeKind.Local).ToUniversalTime();
 
         // Determine end time
         DateTime endUtc;
@@ -156,7 +151,6 @@ public class BookingController : ControllerBase
         if (booking == null) return NotFound("Booking not found");
 
         var item = _context.Items.FirstOrDefault(i => i.Id == booking.ItemId);
-        if (item != null) item.IsAvailable = true;
 
         _context.Bookings.Remove(booking);
         _context.SaveChanges();

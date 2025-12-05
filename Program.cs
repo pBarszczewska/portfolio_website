@@ -9,9 +9,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<EmailService>();
 
 
-// PostgreSQL connection
-builder.Services.AddDbContext<BookingContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// SqLite DB connection
+    builder.Services.AddDbContext<BookingContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
 
 
 var app = builder.Build();
