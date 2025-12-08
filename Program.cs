@@ -1,4 +1,5 @@
 using BookingApi.Data;
+using BookingApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,9 @@ builder.Services.AddScoped<EmailService>();
     builder.Services.AddDbContext<BookingContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
 
+// MailJet
+    builder.Services.Configure<MailjetSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
 
 var app = builder.Build();
 
@@ -40,7 +44,7 @@ using (var scope = app.Services.CreateScope())
             IsAdmin = true
         });
         context.SaveChanges();
-        Console.WriteLine("Default admin account created (admin / admin123)");
+        Console.WriteLine("Default admin account created");
     }
 }
 

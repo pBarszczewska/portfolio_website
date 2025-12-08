@@ -1,25 +1,26 @@
-using SendGrid;
-using SendGrid.Helpers.Mail;
+using Mailjet.Client;
+using Mailjet.Client.Resources;
+using Newtonsoft.Json.Linq;
+
 
 public class EmailService
 {
     private readonly string? _apiKey;
+    private readonly string? _apiSecret;
     private readonly string? _senderEmail;
     private readonly string? _senderName;
 
     public EmailService(IConfiguration config)
     {
-        _apiKey = config["EmailSettings:SendGridApiKey"];
+        _apiKey = config["EmailSettings:ApiKey"];
+        _apiSecret = config["EmailSettings:ApiSecret"];
         _senderEmail = config["EmailSettings:SenderEmail"];
         _senderName = config["EmailSettings:SenderName"];
     }
 
     public async Task SendBookingConfirmationAsync(string toEmail, string username, string itemName, DateTime startDate, DateTime endDate)
     {
-        var client = new SendGridClient(_apiKey);
-        var from = new EmailAddress(_senderEmail, _senderName);
-        var to = new EmailAddress(toEmail, username);
-        var subject = "Paulina Barszczewska - Meeting Confirmation";
+        var client = new MailjetClient(_apiKey, _apiSecret);
 
         // Generate Outlook calendar link
         var outlookUrl =
@@ -45,12 +46,24 @@ public class EmailService
             <p><strong>Paulina Barszczewska</strong></p>
         ";
 
-        var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
-        var response = await client.SendEmailAsync(msg);
+        var request = new MailjetRequest
+        {
+            Resource = Send.Resource
+        }
+        .Property("FromEmail", _senderEmail)
+        .Property("FromName", _senderName)
+        .Property("Subject", "Meeting Confirmation")
+        .Property("Html-part", htmlContent)
+        .Property("Recipients", new JArray {
+            new JObject {
+                { "Email", toEmail },
+                { "Name", username }
+            }
+        });
 
-        Console.WriteLine($"SendGrid response: {response.StatusCode}");
-        var responseBody = await response.Body.ReadAsStringAsync();
-        Console.WriteLine($"SendGrid body: {responseBody}");
+        MailjetResponse response = await client.PostAsync(request);
 
+        Console.WriteLine($"Mailjet response: {response.StatusCode}");
+        Console.WriteLine($"Mailjet body: {response.GetData()}");
     }
 }
