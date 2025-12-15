@@ -48,8 +48,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseStaticFiles();
 app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
