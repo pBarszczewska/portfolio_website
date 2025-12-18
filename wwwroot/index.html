@@ -24,7 +24,7 @@
 
       /* pattern background */
       .pattern-bg {
-        background-image: url('https://cdn.pixabay.com/photo/2021/12/29/12/08/line-art-6901479_1280.jpg');
+        background-image: url('https://img.freepik.com/premium-vector/greenery-wedding-invitation-design-with-floral-watercolor_118960-4626.jpg?semt=ais_hybrid&w=740&q=80');
         background-size: cover;
         background-position: center;
       }
@@ -41,6 +41,7 @@
           <li><a id="homeMenu" href="#home" class="hover:text-gray-800">Home</a></li>
           <li><a id="aboutMenu" href="#about" class="hover:text-gray-800">About</a></li>
           <li><a id="workMenu" href="#work" class="hover:text-gray-800">Work</a></li>
+          <li><a id="educationMenu" href="#education" class="hover:text-gray-800">Education</a></li>
           <li><a id="contactMenu" href="#contact" class="hover:text-gray-800">Contact</a></li>
           <li class="relative">
             <button id="langButton" class="hover:text-gray-800 focus:outline-none">Language ▼</button>
@@ -73,7 +74,7 @@
         <!-- Right side: image -->
         <div class="flex justify-center md:justify-end">
           <img
-            src="images/Face.jpg"
+            src="images/ProfilePic.jpg"
             class="rounded-3xl w-64 h-64 object-cover shadow-lg border-4 border-white"
           />
         </div>
@@ -82,7 +83,7 @@
       <!-- About Me -->
       <section id="about" class="pattern-bg bg-fixed w-full mx-auto px-6 py-16 rounded-2xl shadow-md">
         <h3 id="aboutHeader" class="text-4xl font-semibold mb-6 text-gray-800">About Me</h3>
-        <div class="bg-white/80 rounded-2xl p-6">
+        <div class="bg-white/95 rounded-2xl p-6">
           <div id="aboutMeJob1" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
           <div id="aboutMeJob2" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
           <div id="aboutMeJob3" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
@@ -96,10 +97,16 @@
         <div id="myWorkJob2" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
       </section>
 
+      <!-- Education -->
+      <section id="education" class="max-w-4xl mx-auto px-6 py-16">
+        <h3 id="educationHeader" class="text-4xl font-semibold mb-6 text-gray-800">Education</h3>
+        <div id="educationText" class="text-lg text-gray-600 leading-relaxed mb-8"></div>
+      </section>
+
       <!-- Language -->
       <section id="language" class="pattern-bg bg-fixed w-full mx-auto px-6 py-16 rounded-2xl shadow-md">
         <h3 id="languageHeader" class="text-4xl font-semibold mb-6 text-gray-800">Language</h3>
-        <div class="bg-white/80 rounded-2xl p-6">
+        <div class="bg-white/95 rounded-2xl p-6">
           <p id="languageText" class="text-lg text-gray-600 leading-relaxed mb-8">
             Native Polish speaker, fluent in English (C1 certified) and conversational to fluent in Spanish (B2 level).
           </p>
@@ -160,8 +167,8 @@
             <li>C# and ASP.NET Core Web API</li>
             <li>RESTful API design</li>
             <li>Entity Framework Core</li>
-            <li>PostgreSQL database</li>
-            <li>SendGrid email integration</li>
+            <li>SqLite database</li>
+            <li>Mailjet email integration</li>
             <li>JavaScript, HTML, TailwindCSS</li>
             <li>Git & version control</li>
             <li>JSON handling and API integration</li>
@@ -170,6 +177,13 @@
         aboutMeJob1: "Software-oriented automation engineer with over 10 years of experience developing and integrating PLC and SCADA systems in industrial environments. Skilled in C# and .NET development for automation, data acquisition, and system integration.",
         aboutMeJob2: "Experienced in bridging OT and IT layers — from field control logic to supervisory applications and data systems. Passionate about building reliable, maintainable software that enhances process visibility and efficiency.",
         aboutMeJob3: "Currently transitioning toward a more software-focused role, leveraging my deep understanding of automation systems to develop smarter, data-driven industrial applications.",
+        educationText:` 
+        <ul>
+          <li>Gdansk University of Technology</li>
+          <li>B.Sc. Electrical Engineering</li>
+          <li>Honours Level 8 Bachelor’s Degree 2011 – 2015</li>
+          <li>For my final project I was working with Siemens PLC and Simatic SCADA System creating an automated smart grass & pitch health system for football centers with natural grass.</li>
+        </ul>`,
         aboutHeader: "About Me",
         aboutMenu: "About Me",
         contactHeader:"Contact",
@@ -202,8 +216,8 @@
             <li>C# y ASP.NET Core Web API</li>
             <li>Diseño de API RESTful</li>
             <li>Entity Framework Core</li>
-            <li>Base de datos PostgreSQL</li>
-            <li>Integración de correo electrónico SendGrid</li>
+            <li>Base de datos SqLite</li>
+            <li>Integración de correo electrónico Mailjet</li>
             <li>JavaScript, HTML, TailwindCSS</li>
             <li>Git y control de versiones</li>
             <li>Manejo de JSON e integración de API</li>
@@ -212,12 +226,19 @@
         aboutMeJob1: "Ingeniera de automatización orientada al software con más de 10 años de experiencia en el desarrollo e integración de sistemas PLC y SCADA en entornos industriales. Experta en desarrollo C# y .NET para automatización, adquisición de datos e integración de sistemas",
         aboutMeJob2: "Tengo experiencia en conectar las capas de OT e IT, desde la lógica de control hasta las aplicaciones de supervisión y los sistemas de datos. Me apasiona crear software fiable y fácil de mantener que mejore la visibilidad y la eficiencia de los procesos.",
         aboutMeJob3: "Actualmente me centro en un puesto más orientado al software, aprovechando mi profundo conocimiento de los sistemas de automatización para desarrollar aplicaciones industriales más inteligentes y basadas en datos.",
+        educationText:` 
+        <ul>
+          <li>Universidad Tecnológica de Gdansk</li>
+          <li>Ingeniería Eléctrica</li>
+          <li>Grado universitario (Nivel MECES 2) 2011 – 2015</li>
+          <li>Para mi proyecto final, trabajé con Siemens PLC y Simatic SCADA System en la creación de un sistema inteligente automatizado para el cuidado del césped y el terreno de juego en campos de fútbol con césped natural.</li>
+        </ul>`,
         aboutHeader: "Sobre Mi",
         aboutMenu: "Sobre Mi",
         contactHeader:"Contacto",
         contactMenu:"Contacto",
-        languageHeader:"Lengua",
-        langButton:"Lengua",
+        languageHeader:"Idiomas",
+        langButton:"Idioma",
         workHeader:"Mi trabajo",
         workMenu:"Mi trabajo",
         homeMenu:"Inicio",
@@ -243,8 +264,8 @@
             <li>C# i ASP.NET Core Web API</li>
             <li>Projektowanie interfejsu API RESTful</li>
             <li>Entity Framework Core</li>
-            <li>Baza danych PostgreSQL</li>
-            <li>Integracja poczty elektronicznej SendGrid</li>
+            <li>Baza danych SqLite</li>
+            <li>Integracja poczty elektronicznej Mailjet</li>
             <li>JavaScript, HTML, TailwindCSS</li>
             <li>Git i kontrola wersji</li>
             <li>Obsługa JSON i integracja API</li>
@@ -253,6 +274,13 @@
         aboutMeJob1: "Inżynierka electrotechniki zorientowana na programowianiu,z ponad 10-letnim doświadczeniem w opracowywaniu i integrowaniu systemów PLC i SCADA w środowiskach przemysłowych. Z umiejętnościami w zakresie programowania w językach C# i .NET w zakresie automatyki, gromadzenia danych i integracji systemów",
         aboutMeJob2: "Doświadczona w łączeniu warstw OT i IT — od logiki sterowania po aplikacje nadzorcze i systemy danych. Pasjonatka tworzenia niezawodnego, łatwego w utrzymaniu oprogramowania, które zwiększa przejrzystość i wydajność procesów.",
         aboutMeJob3: "Obecnie przechodzę do roli bardziej skoncentrowanej na oprogramowaniu, wykorzystując swoją dogłębną wiedzę na temat systemów automatyki do opracowywania inteligentniejszych, opartych na danych aplikacji przemysłowych.",
+        educationText:` 
+        <ul>
+          <li>Politechnika Gdańska</li>
+          <li>Elektrotechnika</li>
+          <li>Inżynier 2011 – 2015</li>
+          <li>W ramach projektu dyplomowego pracowałam z Siemens PLC i Simatic SCADA, tworząc zautomatyzowany system monitorowania stanu murawy i boiska dla ośrodków piłkarskich z naturalną trawą.</li>
+        </ul>`,
         aboutHeader: "O mnie",
         aboutMenu: "O mnie",
         contactHeader:"Kontakt",
@@ -274,7 +302,7 @@
         if (!el) continue;
         const value = translations[lang][id];
       // IDs that should accept HTML (lists, formatted text, etc.)
-      const htmlFields = ["myWorkJob1", "myWorkJob2"];
+      const htmlFields = ["myWorkJob1", "myWorkJob2", "educationText"];
 
       if (htmlFields.includes(id)) {
         el.innerHTML = value;    // allow HTML

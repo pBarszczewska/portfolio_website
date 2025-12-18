@@ -116,10 +116,11 @@
     <nav class="max-w-5xl mx-auto flex justify-between items-center py-4 px-6">
       <h1 class="text-xl font-semibold text-gray-800">Paulina Barszczewska</h1>
       <ul class="flex space-x-6 text-gray-600 font-medium">
-        <li><a href="index.html#home" class="hover:text-gray-800">Home</a></li>
-        <li><a href="index.html#about" class="hover:text-gray-800">About</a></li>
-        <li><a href="index.html#work" class="hover:text-gray-800">Work</a></li>
-        <li><a href="index.html#contact" class="hover:text-gray-800">Contact</a></li>
+        <li><a id="homeMenu" href="index.html#home" class="hover:text-gray-800">Home</a></li>
+        <li><a id="aboutMenu" href="index.html#about" class="hover:text-gray-800">About</a></li>
+        <li><a id="workMenu" href="index.html#work" class="hover:text-gray-800">Work</a></li>
+          <li><a id="educationMenu" href="#index.html#education" class="hover:text-gray-800">Education</a></li>
+        <li><a id="contactMenu" href="index.html#contact" class="hover:text-gray-800">Contact</a></li>
         <li class="relative">
           <button id="langButton" class="hover:text-gray-800 focus:outline-none">Language ▼</button>
           <!-- Dropdown -->
@@ -140,25 +141,23 @@
 
     <div id="loginSection" class="space-y-3">
       <h2 class="text-xl font-semibold">Login</h2>
-      <input id="login-username" class="border border-gray-300 rounded p-2 w-full" placeholder="Username">
-      <input id="login-password" type="password" class="border border-gray-300 rounded p-2 w-full" placeholder="Password">
+      <input id="loginUsername" class="border border-gray-300 rounded p-2 w-full" placeholder="Username">
+      <input id="loginPassword" type="password" class="border border-gray-300 rounded p-2 w-full" placeholder="Password">
       <button onclick="login()" class="bg-gray-500 hover:bg-gray-600 text-white w-full py-2 rounded">Login</button>
 
-      <p class="text-center text-sm text-gray-500">No account? 
-        <a href="#" onclick="showRegister()" class="text-gray-700 hover:underline">Register</a>
-      </p>
+      <p id="noAccount" class="text-center text-sm text-gray-500"></p>
     </div>
 
     <div id="register-section" class="space-y-3 hidden">
       <h2 class="text-xl font-semibold">Register</h2>
-      <input id="reg-username" class="border border-gray-300 rounded p-2 w-full" placeholder="Username">
-      <input id="reg-password" type="password" class="border border-gray-300 rounded p-2 w-full" placeholder="Password">
-      <input id="reg-email" type="email" class="border border-gray-300 rounded p-2 w-full" placeholder="Example@email.com">
+      <input id="regUsername" class="border border-gray-300 rounded p-2 w-full" placeholder="Username">
+      <input id="regPassword" type="password" class="border border-gray-300 rounded p-2 w-full" placeholder="Password">
+      <input id="regEmail" type="email" class="border border-gray-300 rounded p-2 w-full" placeholder="Example@email.com">
       <button onclick="register()" class="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded">Register</button>
 
-      <p class="text-center text-sm text-gray-500">Already registered? 
-        <a href="#" onclick="showLogin()" class="text-gray-700 hover:underline">Login</a>
-      </p>
+      <p id="alreadyReg" class="text-center text-sm text-gray-500"></p>
+      
+      <div id="gdpr" class="text-gray-400 text-sm mt-4"></div>
     </div>
 
     <div id="booking-section" class="hidden">
@@ -218,6 +217,9 @@
 
 <script>
   const API_BASE = "https://paulinabarszczewska-cyh7cfdbevb4f0eh.westeurope-01.azurewebsites.net/api";
+  //left for testing
+  //const API_BASE = "http://localhost:5011/api";
+
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -284,8 +286,8 @@ async function register()
 
 async function login() 
 {
-  const username = document.getElementById('login-username').value.trim();
-  const password = document.getElementById('login-password').value.trim();
+  const username = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
 
   const res = await fetch(`${API_BASE}/User/login`, {
     method: 'POST',
@@ -317,6 +319,11 @@ async function loadItems()
   const container = document.getElementById('items-list');
   container.innerHTML = '';
 
+  if (!items.length) {
+    container.innerHTML = '<p class="text-gray-400">No available items.</p>';
+    return;
+  }
+
   items.forEach(i => {
     const div = document.createElement('div');
     div.className = 'flex justify-between items-center p-3 border rounded';
@@ -346,7 +353,7 @@ function selectItem(itemname)
   document.getElementById('items-step').style.display = 'none';
   document.getElementById('booking-step').style.display = 'block';
 }
-window.selectItem = selectItem; // globally accessible
+window.selectItem = selectItem; 
 
 function showItemsStep() 
 {
@@ -385,7 +392,6 @@ document.getElementById('book-btn').addEventListener('click', async () => {
   }
 });
 
-// Load items on page load
 loadItems();
 
 
@@ -443,10 +449,6 @@ async function book(itemname)
   alert('Please select a start date.');
   return;
   }
-
-  // Convert to full ISO UTC string
-  //const startDate = new Date(startLocal).toISOString();
-  //const endDate = new Date(endLocal).toISOString();
 
   // Helper: convert YYYY-MM-DD → local datetime string (no timezone)
   function toLocalDateISOString(localDate) {
@@ -638,7 +640,6 @@ async function loadAllItems() {
 
     if (!items.length) {
       container.innerHTML += '<p>No items found.</p>';
-      return;
     }
 
     // Dropdown
@@ -761,33 +762,116 @@ function logout()
 </script>
 
   <script>
-// TODO add other sectons and correct translation
     const translations = {
       en: {
-        intro: "I’m a Software Engineer specifying in Industrial Automation & SCADA Integration.",
-        'about-title': "About Me",
-        'about-text': "I'm a multidisciplinary designer focused on meaningful interactions and visual harmony."
+        gdpr: ` 
+        <p>By registering, you agree to our Privacy Policy.</p>
+        <ul>
+          <li>We collect your email and login credentials to create and manage your account.</li>
+          <li>Passwords are securely hashed and never stored in plain text. </li>
+          <li>Your data is not shared with third parties. </li>
+          <li>You may request deletion of your account at any time.</li>
+        </ul>`,
+        aboutMenu: "About Me",
+        contactMenu: "Contact",
+        langButton:"Language",
+        workMenu:"My work",
+        homeMenu:"Home",
+        loginSectionHeader:"Please log in to make a reservation",    
+        noAccount:`No account? 
+        <a href="#" onclick="showRegister()" class="text-gray-700 hover:underline">Register</a>`,
+        alreadyReg:`Already registered? 
+        <a href="#" onclick="showLogin()" class="text-gray-700 hover:underline">Login</a>`,
+        loginUsernamePlaceholder:"Username",
+        loginPasswordPlaceholder:"Password",
+        regUsernamePlaceholder:"Username",
+        regPasswordPlaceholder:"Password",
+        rights:"Paulina Barszczewska. All rights reserved.",
       },
       es: {
-        intro: "Diseño experiencias reflexivas e inspiradas en la naturaleza.",
-        'about-title': "Sobre mí",
-        'about-text': "Soy una diseñadora multidisciplinaria enfocada en interacciones significativas y armonía visual."
+        gdpr: ` 
+        <p>Al registrarse, usted acepta nuestra Política de privacidad.</p>
+        <ul>
+          <li>Recopilamos su correo electrónico y sus credenciales de inicio de sesión para crear y gestionar su cuenta.</li>
+          <li>Las contraseñas se cifran de forma segura y nunca se almacenan en texto plano. </li>
+          <li>Sus datos no se comparten con terceros. </li>
+          <li>Puede solicitar la eliminación de su cuenta en cualquier momento.</li>
+        </ul>`,
+        aboutMenu: "Sobre mi",
+        contactMenu: "Contacto",
+        langButton:"Idioma",
+        workMenu:"Mi trabajo",
+        homeMenu:"Inicio",
+        loginSectionHeader:"Inicie sesión para realizar una reserva",  
+        noAccount:`No tienes una cuenta?
+        <a href="#" onclick="showRegister()" class="text-gray-700 hover:underline">Regístrase</a>`,
+        alreadyReg:`Ya registrado?
+        <a href="#" onclick="showLogin()" class="text-gray-700 hover:underline">Iniciar sesión</a>`, 
+        loginUsernamePlaceholder:"Nombre de usario",
+        loginPasswordPlaceholder:"Contraseña",
+        regUsernamePlaceholder:"Nombre de usario",
+        regPasswordPlaceholder:"Contraseña",
+        rights:"Paulina Barszczewska. Todos los derechos reservados.",
       },
       pl: {
-        intro: "Projektuję przemyślane, inspirowane naturą doświadczenia.",
-        'about-title': "O mnie",
-        'about-text': "Jestem multidyscyplinarną projektantką skupioną na znaczących interakcjach i wizualnej harmonii."
+        gdpr: ` 
+        <p>Rejestrując się, wyrażasz zgodę na naszą Politykę prywatności.</p>
+        <ul>
+          <li>Gromadzimy Twój adres e-mail i dane logowania w celu utworzenia konta i zarządzania nim. </li>
+          <li>Hasła są bezpiecznie szyfrowane i nigdy nie są przechowywane w postaci zwykłego tekstu. </li>
+          <li>Twoje dane nie są udostępniane osobom trzecim. </li>
+          <li>W każdej chwili możesz poprosić o usunięcie swojego konta. </li>
+        </ul>`,
+        aboutMenu: "O mnie",
+        contactMenu: "Kontakt",
+        langButton:"Jezyk",
+        workMenu:"O pracy",
+        homeMenu:"Start",
+        loginSectionHeader:"Zaloguj się, aby dokonać rezerwacji",   
+        noAccount:`Nie masz konta?
+        <a href="#" onclick="showRegister()" class="text-gray-700 hover:underline">Zarejestruj się</a>`,
+        alreadyReg:`Jestes już zarejestrowany?
+        <a href="#" onclick="showLogin()" class="text-gray-700 hover:underline">Zaloguj się</a>`, 
+        loginUsernamePlaceholder:"Nazwa użytkownika",
+        loginPasswordPlaceholder:"Hasło",
+        regUsernamePlaceholder:"Nazwa użytkownika",
+        regPasswordPlaceholder:"Hasło",
+        rights:"Paulina Barszczewska. Wszelkie prawa zastrzeżone.",
       }
     };
 
  function setLanguage(lang) {
       for (const id in translations[lang]) {
         const el = document.getElementById(id);
-        if (el) el.textContent = translations[lang][id];
+        if (!el) continue;
+        const value = translations[lang][id];
+
+      const placeholderMap = {
+        regUsername: "regUsernamePlaceholder",
+        regPassword: "regPasswordPlaceholder",
+        loginUsername: "loginUsernamePlaceholder",
+        loginPassword: "loginPasswordPlaceholder"
+
+      };
+
+      for (const id in placeholderMap) {
+        document.getElementById(id).placeholder =
+          translations[lang][placeholderMap[id]];
       }
+      
+      // IDs that should accept HTML (lists, formatted text, etc.)
+      const htmlFields = ["gdpr", "noAccount", "alreadyReg"];
+
+      if (htmlFields.includes(id)) {
+        el.innerHTML = value;    // allow HTML
+      } else {
+        el.textContent = value;  // plain text only
+      }
+    }
+
       localStorage.setItem('language', lang);
       document.getElementById('langDropdown').classList.add('hidden');
-    }
+   }
 
     // Load saved language
     window.onload = () => {
@@ -812,6 +896,7 @@ function logout()
       langDropdown.classList.add('hidden');
       document.getElementById('language').scrollIntoView({ behavior: 'smooth' });
     });
+
   </script>
 
 </body>

@@ -1,6 +1,7 @@
 using BookingApi.Data;
 using BookingApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,12 +38,18 @@ using (var scope = app.Services.CreateScope())
     // create default admin if none exists
     if (!context.Users.Any(u => u.IsAdmin))
     {
-        context.Users.Add(new BookingApi.Models.User
+        var hasher = new PasswordHasher<BookingApi.Models.User>();
+
+        var admin = new BookingApi.Models.User
         {
             Username = "admin",
-            Password = "P@ul1na", 
+            Email = "pu.barszczewska@gmail.com", 
             IsAdmin = true
-        });
+        };
+        
+        admin.PasswordHash = hasher.HashPassword(admin, "P@ul1na");
+
+        context.Users.Add(admin);
         context.SaveChanges();
         Console.WriteLine("Default admin account created");
     }

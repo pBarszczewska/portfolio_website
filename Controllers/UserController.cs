@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using BookingApi.Data;
 using BookingApi.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Identity;
 
 namespace BookingApi.Controllers;
 
@@ -19,24 +19,27 @@ public class UserController : ControllerBase
 
 
     [HttpPost("register")]
-    public IActionResult Register(User user)
+    public IActionResult Register(RegisterDto dto)
     {
+
         // check if username already exists
-        if (_context.Users.Any(u => u.Username == user.Username))
-        {
-            return BadRequest("Username already taken");
-        }
+        if (_context.Users.Any(u => u.Username == dto.Username))
+        return BadRequest("Username already taken");
 
         // check if email already exists and is valid
-        if (_context.Users.Any(e => e.Email == user.Email))
-        {
-            return BadRequest("Email already registered");
-        }
+        if (_context.Users.Any(e => e.Email == dto.Email))
+        return BadRequest("Email already registered");
 
-        if (string.IsNullOrWhiteSpace(user.Email) || !user.Email.Contains("@"))
+        if (string.IsNullOrWhiteSpace(dto.Email) || !dto.Email.Contains("@"))
+        return BadRequest("Valid email is required");
+
+         var user = new User
         {
-            return BadRequest("Valid email is required");
-        }
+            Username = dto.Username,
+            Email = dto.Email
+        };
+        var hasher = new PasswordHasher<User>();
+        user.PasswordHash = hasher.HashPassword(user, dto.Password);
 
         _context.Users.Add(user);
         _context.SaveChanges();
@@ -51,11 +54,24 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] User user)
+    public IActionResult Login([FromBody] LoginDto dto)
     {
-        var found = _context.Users.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
-        if (found == null) return Unauthorized("Invalid credentials");
-        return Ok(new { found.Id, found.Username,found.Email, found.IsAdmin });
+        var user = _context.Users.FirstOrDefault(u => u.Username == dto.Username);
+
+        if (user == null)
+        return Unauthorized("Invalid credentials");
+
+        var hasher = new PasswordHasher<User>();
+        var result = hasher.VerifyHashedPassword(
+            user,
+            user.PasswordHash,
+            dto.Password
+        );
+
+        if (result == PasswordVerificationResult.Failed)
+        return Unauthorized("Invalid credentials");
+        
+        return Ok(new { user.Id, user.Username,user.Email, user.IsAdmin });
     }
 
     [HttpGet("userBookings")]
