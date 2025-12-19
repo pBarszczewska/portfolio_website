@@ -33,7 +33,8 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<BookingContext>();
 
     // make sure database exists
-    context.Database.EnsureCreated();
+    //context.Database.EnsureCreated();
+    context.Database.Migrate();
 
     // create default admin if none exists
     if (!context.Users.Any(u => u.IsAdmin))
