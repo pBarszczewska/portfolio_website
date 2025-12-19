@@ -58,6 +58,10 @@ public class EmailService
             new JObject {
                 { "Email", toEmail },
                 { "Name", username }
+            },
+            new JObject {
+                {"Email", _senderEmail}, // email to sender
+                {"Name", _senderName}
             }
         });
 
