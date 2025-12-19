@@ -153,7 +153,8 @@
       <input id="regUsername" class="border border-gray-300 rounded p-2 w-full" placeholder="Username">
       <input id="regPassword" type="password" class="border border-gray-300 rounded p-2 w-full" placeholder="Password">
       <input id="regEmail" type="email" class="border border-gray-300 rounded p-2 w-full" placeholder="Example@email.com">
-      <button onclick="register()" class="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded">Register</button>
+      <!--<button onclick="register()" class="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded">Register</button>-->
+      <button id="registerBtn" class="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded">Register</button>
 
       <p id="alreadyReg" class="text-center text-sm text-gray-500"></p>
       
@@ -263,6 +264,11 @@ function showBooking()
   loadItems();
   loadBookings();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const registerBtn = document.getElementById("registerBtn");
+    registerBtn.onclick = register;
+});
 
 async function register() 
 {
