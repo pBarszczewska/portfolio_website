@@ -266,10 +266,10 @@ function showBooking()
 
 async function register() 
 {
-  const username = document.getElementById('reg-username').value.trim();
-  const password = document.getElementById('reg-password').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  if (!username || !password) return alert('Enter username and password.');
+  const username = document.getElementById('regUsername').value.trim();
+  const password = document.getElementById('regPassword').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  if (!username || !password || !email) return alert('Enter username, password and email.');
 
   const res = await fetch(`${API_BASE}/User/register`, {
     method: 'POST',

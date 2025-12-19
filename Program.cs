@@ -32,8 +32,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<BookingContext>();
 
-    // make sure database exists
-    //context.Database.EnsureCreated();
+    // for azure it has to migrate db not only check if exists
     context.Database.Migrate();
 
     // create default admin if none exists
