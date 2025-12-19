@@ -277,20 +277,10 @@ async function register()
   const emailIn = document.getElementById('regEmail').value.trim();
   if (!usernameIn || !passwordIn || !emailIn) return alert('One or more inputs are missing');
 
-  console.log("emailInput:", emailIn);
-  console.log("emailInput.value:", emailIn.value);
-
-  console.log("passwordIn:", passwordIn);
-  console.log("passwordIn.value:", passwordIn.value);
-
-  console.log("usernameIn:", usernameIn);
-  console.log("usernameIn.value:", usernameIn.value);
-
-
   const body = {
-    Email: emailIn.value.trim(),
-    Username: usernameIn.value.trim(),
-    Password: passwordIn.value
+    Email: emailIn,
+    Username: usernameIn,
+    Password: passwordIn
   };
 
   const res = await fetch(`${API_BASE}/User/register`, {
