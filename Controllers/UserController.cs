@@ -21,7 +21,11 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public IActionResult Register(RegisterDto dto)
     {
-
+    Console.WriteLine("REGISTER HIT");
+        if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
         // check if username already exists
         if (_context.Users.Any(u => u.Username == dto.Username))
         return BadRequest("Username already taken");

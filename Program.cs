@@ -2,6 +2,7 @@ using BookingApi.Data;
 using BookingApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +55,10 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine("Default admin account created");
     }
 }
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
