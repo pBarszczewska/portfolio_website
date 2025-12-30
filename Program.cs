@@ -11,6 +11,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<EmailService>();
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 
 // SqLite DB connection
     builder.Services.AddDbContext<BookingContext>(options =>
@@ -55,16 +60,13 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine("Default admin account created");
     }
 }
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-});
+
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseAuthorization();
-
+app.UseRouting();
 app.MapControllers();
 
 app.Run();
