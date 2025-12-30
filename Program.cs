@@ -11,12 +11,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<EmailService>();
 
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-});
-
-
 // SqLite DB connection
     builder.Services.AddDbContext<BookingContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));

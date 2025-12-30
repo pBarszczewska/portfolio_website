@@ -286,12 +286,14 @@ async function register()
   const res = await fetch(`${API_BASE}/User/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({body})
+    body: JSON.stringify(body)
   });
   if (res.ok) {
     alert('Registered! You can now log in.');
     showLogin();
   } else {
+    const err = await res.text();
+    console.error(err);
     alert('Registration failed.');
   }
 }
@@ -304,7 +306,9 @@ async function login()
   const res = await fetch(`${API_BASE}/User/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ 
+      Username: username,
+      Password: password })
   });
 
   if (res.ok) 
