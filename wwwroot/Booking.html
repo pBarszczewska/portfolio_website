@@ -217,9 +217,9 @@
 
 
 <script>
-  const API_BASE = "https://paulinabarszczewska-cyh7cfdbevb4f0eh.westeurope-01.azurewebsites.net/api";
+  const API_BASE = "https://paulinabarszczewska-cyh7cfdbevb4f0eh.westeurope-01.azurewebsites.net";
   //left for testing
-  //const API_BASE = "http://localhost:5011/api";
+  //const API_BASE = "http://localhost:5011";
 
   let currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -283,7 +283,7 @@ async function register()
     Password: passwordIn
   };
 
-  const res = await fetch(`${API_BASE}/User/register`, {
+  const res = await fetch(`${API_BASE}/api/User/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
@@ -303,7 +303,7 @@ async function login()
   const username = document.getElementById('loginUsername').value.trim();
   const password = document.getElementById('loginPassword').value.trim();
 
-  const res = await fetch(`${API_BASE}/User/login`, {
+  const res = await fetch(`${API_BASE}/api/User/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
@@ -330,7 +330,7 @@ let selectedItem = null;
 
 async function loadItems() 
 {
-  const res = await fetch(`${API_BASE}/Item/all`);
+  const res = await fetch(`${API_BASE}/api/Item/all`);
   const items = await res.json();
   const container = document.getElementById('items-list');
   container.innerHTML = '';
@@ -387,7 +387,7 @@ document.getElementById('book-btn').addEventListener('click', async () => {
 
   if (!startDate) return alert('Please select a start time.');
 
-  const url = new URL(`${API_BASE}/Booking`);
+  const url = new URL(`${API_BASE}/api/Booking`);
   url.searchParams.append('username', currentUser.username);
   url.searchParams.append('email', currentUser.email);
   url.searchParams.append('itemname', selectedItem);
@@ -415,7 +415,7 @@ async function loadBookings()
 {
   if (!currentUser) return;
 
-  const res = await fetch(`${API_BASE}/Booking/user/${currentUser.username}`);
+  const res = await fetch(`${API_BASE}/api/Booking/user/${currentUser.username}`);
   if (!res.ok) {
     document.getElementById('my-bookings').innerHTML = '<p class="text-gray-400">No bookings found.</p>';
     return;
@@ -482,7 +482,7 @@ async function book(itemname)
   params.append('durationHours', duration);
   params.append('wholeDay', wholeDay);
 
-  const res = await fetch(`${API_BASE}/Booking?${params}`, {
+  const res = await fetch(`${API_BASE}/api/Booking?${params}`, {
     method: 'POST'
   });
 
@@ -501,7 +501,7 @@ async function cancelBooking(id)
 {
   if (!confirm('Are you sure you want to cancel this booking?')) return;
 
-  const res = await fetch(`${API_BASE}/Booking/cancel?id=${id}`, { method: 'DELETE' });
+  const res = await fetch(`${API_BASE}/api/Booking/cancel?id=${id}`, { method: 'DELETE' });
   if (res.ok) {
     alert('Booking cancelled.');
     // remove the booking element instantly
@@ -519,7 +519,7 @@ async function cancelBooking(id)
 async function loadAllBookings() 
 {
   console.log("Admin clicked: Manage Bookings");
-  const res = await fetch(`${API_BASE}/Booking`);
+  const res = await fetch(`${API_BASE}/api/Booking`);
   if (!res.ok) return alert('Failed to load bookings');
   const bookings = await res.json();
   const container = document.getElementById('admin-content');
@@ -538,7 +538,7 @@ async function loadAllBookings()
 async function adminCancelBooking(id) {
   if (!confirm('Are you sure you want to cancel this booking?')) return;
 
-  const res = await fetch(`${API_BASE}/Booking/cancel?id=${id}`, { method: 'DELETE' });
+  const res = await fetch(`${API_BASE}/api/Booking/cancel?id=${id}`, { method: 'DELETE' });
   if (res.ok) {
     alert('Booking cancelled.');
     document.getElementById('view-all-bookings-btn').click(); // reload all bookings
@@ -555,7 +555,7 @@ async function adminChangeBooking(id)
   if (!currentUser || !currentUser.isAdmin) return alert('Admin only.');
 
   // Fetch the booking details
-  const res = await fetch(`${API_BASE}/Booking`);
+  const res = await fetch(`${API_BASE}/api/Booking`);
   if (!res.ok) return alert('Failed to load bookings.');
 
   const bookings = await res.json();
@@ -646,7 +646,7 @@ async function loadAllItems() {
   container.innerHTML = '<h3 class="text-lg font-semibold mb-2">Manage Items</h3>';
 
   try {
-    const res = await fetch(`${API_BASE}/Item/all`);
+    const res = await fetch(`${API_BASE}/api/Item/all`);
     if (!res.ok) {
       throw new Error(`Failed to load items: ${res.status}`);
     }
@@ -694,7 +694,7 @@ async function loadAllItems() {
       if (!newName) return alert('Enter a new name.');
 
       const params = new URLSearchParams({ id, name: newName });
-      const res = await fetch(`${API_BASE}/Item/update?${params}`, { method: 'PUT' });
+      const res = await fetch(`${API_BASE}/api/Item/update?${params}`, { method: 'PUT' });
 
       if (res.ok) {
         alert('Item renamed successfully.');
@@ -715,7 +715,7 @@ async function loadAllItems() {
       if (!id) return alert('Select an item first.');
       if (!confirm('Are you sure you want to delete this item?')) return;
 
-      const res = await fetch(`${API_BASE}/Item/delete?id=${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/api/Item/delete?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         alert('Item deleted successfully.');
         loadAllItems();
@@ -737,7 +737,7 @@ async function loadAllItems() {
       // Only allow add if no item is selected and a name is provided
       if (id) return alert('Deselect an item to add a new one.');
 
-      const res = await fetch(`${API_BASE}/Item/add`, {
+      const res = await fetch(`${API_BASE}/api/Item/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newName })
