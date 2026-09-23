@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - PaulinaBarszczewska
 on:
   push:
     branches:
-      - azure
+      - net9
   workflow_dispatch:
 
 jobs:
